@@ -5,7 +5,7 @@ layout: docs
 permalink: /zh/docs/handbook/typescript-from-scratch.html
 oneline: 从零开始学习 TypeScript
 ---
-
+啦啦啦啦啦123123123123
 恭喜你选择 TypeScript 作为第一门编程语言 —— 你已经做出了明智的决定！
 
 或许你已经听说 TypeScript 是 JavaScript 的“调味料”或“变体”。在现代编程语言中，TypeScript（TS）和 JavaScript（JS）之间的关系相当独特，因此进一步了解这种关系，将帮助你了解如何把 TypeScript 添加到 JavaScript 中。
