@@ -123,11 +123,11 @@ function deleteUser(user: User) {
 
 你将会看到有两种语法构建类型：[Interfaces and Types](/play/?e=83#example/types-vs-interfaces)。你应该更会倾向于`interface`。在某些特殊场景才会用`Type`。
 
-## 联合类型
+## 组合类型
 
 有了TypeScript，你可以通过联合简单的类型来创建复杂的类型。有两种流行的方式来创建：用unions或者用generics。
 
-### Unions
+### Unions（联合）
 
 有了union，你可以声明一个类型表示多种类型中的一个。例如，你可以描述一个`boolean`类型，这个类型要么是`true`要么是`false`：
 
@@ -153,7 +153,7 @@ function getLength(obj: string | string[]) {
 }
 ```
 
-To learn the type of a variable, use `typeof`:
+为了了解一个变量的类型，使用`typeof`:
 
 | Type      | Predicate                          |
 | --------- | ---------------------------------- |
@@ -164,7 +164,7 @@ To learn the type of a variable, use `typeof`:
 | function  | `typeof f === "function"`          |
 | array     | `Array.isArray(a)`                 |
 
-For example, you can make a function return different values depending on whether it is passed a string or an array:
+例如，你可以构造一个函数，先判断入参是字符串还是数组，再进行处理，返回不同的值。
 
 <!-- prettier-ignore -->
 ```ts twoslash
@@ -177,9 +177,9 @@ function wrapInArray(obj: string | string[]) {
 }
 ```
 
-### Generics
+### Generics（泛型）
 
-Generics provide variables to types. A common example is an array. An array without generics could contain anything. An array with generics can describe the values that the array contains.
+Generics给类型提供变量（意思是变化改变type或interface的内容）。一个普遍的例子是数组。一个数组没有泛型可能包含任何类型值。一个有泛型的数组可以描述数组包含的值类型。
 
 ```ts
 type StringArray = Array<string>;
@@ -187,7 +187,7 @@ type NumberArray = Array<number>;
 type ObjectWithNameArray = Array<{ name: string }>;
 ```
 
-You can declare your own types that use generics:
+你可以自己定义一个变量并使用泛型：
 
 ```ts twoslash
 // @errors: 2345
@@ -196,22 +196,22 @@ interface Backpack<Type> {
   get: () => Type;
 }
 
-// This line is a shortcut to tell TypeScript there is a
-// constant called `backpack`, and to not worry about where it came from.
+// 这一行是个简写告诉Typescript有一个
+// 常量叫做`backpack`，不要担心他是哪里来的（意思是全局常量或者declare是不用管）
 declare const backpack: Backpack<string>;
 
-// object is a string, because we declared it above as the variable part of Backpack.
+// `object`变量是字符串类型，因为他在上面声明了作为`Backpack`的变量动态部分
 const object = backpack.get();
 
-// Since the backpack variable is a string, you can't pass a number to the add function.
+// 因为backpack的变量部分是字符串类型，你不能传递数字给add函数
 backpack.add(23);
 ```
 
-## Structural Type System
+## 结构化的类型系统
 
-One of TypeScript's core principles is that type checking focuses on the _shape_ that values have. This is sometimes called "duck typing" or "structural typing".
+Typescript的一个核心原则是，类型检查专注于值value拥有的 _形状shape_ 。这个有时候叫做“鸭子类型”（一个东西鸭子叫或者鸭子走路就是鸭子）或者“结构化类型”
 
-In a structural type system, if two objects have the same shape, they are considered to be of the same type.
+在一个结构化的类型系统，如果两个对象有相同的形状，他们会被认为是相同的type类型。
 
 ```ts twoslash
 interface Point {
@@ -228,9 +228,9 @@ const point = { x: 12, y: 26 };
 logPoint(point);
 ```
 
-The `point` variable is never declared to be a `Point` type. However, TypeScript compares the shape of `point` to the shape of `Point` in the type-check. They have the same shape, so the code passes.
+上面代码`point`变量从来没有被声明到`Point`类型。然而，Typescript在类型检查的时候比较了`point`和`Point`的形状。他们有相同的形状，所以代码通过。（Ts自动检查形状）
 
-The shape-matching only requires a subset of the object's fields to match.
+类型匹配原则只需要子结构满足主结构的某些属性（下面例子）。
 
 ```ts twoslash
 // @errors: 2345
@@ -253,7 +253,9 @@ const color = { hex: "#187ABF" };
 logPoint(color);
 ```
 
-There is no difference between how classes and objects conform to shapes:
+classes类和object对象的形状没有本质差别（两者可以互相认形状）：
+
+（比如下面例子把new VirtualPoint的类实例和interface Point自动识别形状了）
 
 ```ts twoslash
 // @errors: 2345
@@ -280,11 +282,11 @@ const newVPoint = new VirtualPoint(13, 56);
 logPoint(newVPoint); // logs "13, 56"
 ```
 
-If the object or class has all the required properties, TypeScript will say they match, regardless of the implementation details.
+如果object或者class有所有需求的属性，TypeScript将会认为他们相互匹配，忽略一些派生额外属性等需求。
 
-## Next Steps
+## 下一步
 
-This was a brief overview of the syntax and tools used in everyday TypeScript. From here, you can:
+这个是对TypeScript日常使用的语法简单概览，从这里开始，你可以：
 
-- Read the full Handbook [from start to finish](/docs/handbook/intro.html) (30m)
-- Explore the [Playground examples](/play#show-examples)
+- 从头到尾阅读完整的[手册](/docs/handbook/intro.html) (30m)
+- 探索练习场例子 [Playground examples](/play#show-examples)
