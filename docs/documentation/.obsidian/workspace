@@ -4,13 +4,14 @@
     "type": "split",
     "children": [
       {
-        "id": "82d268a49118fb86",
+        "id": "4d40bc24d9d3404e",
         "type": "leaf",
         "state": {
-          "type": "diff-view",
+          "type": "markdown",
           "state": {
-            "file": "docs/documentation/zh/handbook-v2/Everyday Types.md",
-            "staged": false
+            "file": "zh/handbook-v2/Everyday Types.md",
+            "mode": "source",
+            "source": false
           }
         }
       }
@@ -76,6 +77,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "zh/handbook-v2/Everyday Types.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -92,6 +94,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "zh/handbook-v2/Everyday Types.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -113,7 +116,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "zh/handbook-v2/Everyday Types.md"
+              }
             }
           },
           {
@@ -131,12 +136,12 @@
     "direction": "horizontal",
     "width": 300
   },
-  "active": "8781dbcfe9fee85c",
+  "active": "4d40bc24d9d3404e",
   "lastOpenFiles": [
-    "zh/handbook-v2/Everyday Types.md",
     "zh/handbook-v2/The Handbook.md",
-    "2022-08-04.md",
+    "zh/handbook-v2/Everyday Types.md",
     "zh/handbook-v2/Basics.md",
+    "2022-08-04.md",
     "zh/get-started/TS for JS Programmers.md",
     "en/Nightly Builds.md"
   ]
