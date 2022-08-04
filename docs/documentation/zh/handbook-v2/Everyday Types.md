@@ -5,20 +5,22 @@ permalink: /zh/docs/handbook/2/everyday-types.html
 oneline: "The language primitives."
 ---
 
-In this chapter, we'll cover some of the most common types of values you'll find in JavaScript code, and explain the corresponding ways to describe those types in TypeScript.
-This isn't an exhaustive list, and future chapters will describe more ways to name and use other types.
+在这一章，我们将会讨论一些你在JavaScript你使用的常见变量类型，并且解释这些类型在TypeScript里的对应使用。
+这不是一个详尽的列表，并且未来章节将会描述和列举更多其他类型。
 
-Types can also appear in many more _places_ than just type annotations.
-As we learn about the types themselves, we'll also learn about the places where we can refer to these types to form new constructs.
+类型也可以在很多 _地方_ 出现，不只是在类型注释。
+在我们学习类型本身的同时，我们还将了解可以引用这些类型以形成新结构的地方。
 
-We'll start by reviewing the most basic and common types you might encounter when writing JavaScript or TypeScript code.
-These will later form the core building blocks of more complex types.
+我们通过当你在写ts或者js代码可能遇见的最基本常见的类型开始。
+这些基本类型之后会用来构建复杂类型。
 
-## The primitives: `string`, `number`, and `boolean`
+## 原始类型：`字符串`,`数字`和`布尔值`
 
-JavaScript has three very commonly used [primitives](https://developer.mozilla.org/en-US/docs/Glossary/Primitive): `string`, `number`, and `boolean`.
-Each has a corresponding type in TypeScript.
-As you might expect, these are the same names you'd see if you used the JavaScript `typeof` operator on a value of those types:
+Javascript有三个很常见的[原始类型](https://developer.mozilla.org/en-US/docs/Glossary/Primitive)：`字符串`，`数字`和`布尔值`。每种类型在TypeScript里有对应类型。
+正如你猜想的，如果您对这些类型使用JavaScript的typeofOperator, you will看到这些名称：
+
+- `string`代表字符串的值，例如`"Hello, world"`
+- `number`对于像`42`的数字。JavaScript对于整数特定运行时的值，所以也同样没有
 
 - `string` represents string values like `"Hello, world"`
 - `number` is for numbers like `42`. JavaScript does not have a special runtime value for integers, so there's no equivalent to `int` or `float` - everything is simply `number`
