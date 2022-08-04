@@ -21,6 +21,7 @@ Javascript有三个很常见的[原始类型](https://developer.mozilla.org/en-U
 
 - `string`代表字符串的值，例如`"Hello, world"`
 - `number`对于像`42`的数字。JavaScript对于整数特定运行时的值，所以也同样没有，所以不存在`int`和`float`的比较—所有东西都是`number`类型
+- `boolean`对于`true`和`false`两个值
 
 - `string` represents string values like `"Hello, world"`
 - `number` is for numbers like `42`. JavaScript does not have a special runtime value for integers, so there's no equivalent to `int` or `float` - everything is simply `number`
