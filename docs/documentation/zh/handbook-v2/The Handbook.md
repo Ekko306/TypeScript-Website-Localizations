@@ -12,7 +12,7 @@ handbook: "true"
 
 程序员最容易犯的几种错误可以被归纳为类型错误：在预期不同类型的值的情况下使用了某种类型的值，这个可能是简单的拼写错误，对库接口的错误理解，运行时行为的不正确假设，或者其他错误。TypeScript的目标是为JavaScript程序提供一种静态类型检测 —— 换句话所，是在你代码运行之前的一个（静态）工具，这个工具保证你的项目的类型是正确的（类型检测）。
 
-如果你没有JavaScript就来使用TypeScript，并想把TypeScript作为你的第一门语言，我满建议你读下面两个文档，要么是[Microsoft Learn JavaScript tutorial](https://docs.microsoft.com/javascript/)，要么是[JavaScript at the Mozilla Web Docs](https://developer.mozilla.org/docs/Web/JavaScript/Guide)。
+如果你没有JavaScript就来使用TypeScript，并想把TypeScript作为你的第一门语言，我们建议你读下面两个文档，要么是[Microsoft Learn JavaScript tutorial](https://docs.microsoft.com/javascript/)，要么是[JavaScript at the Mozilla Web Docs](https://developer.mozilla.org/docs/Web/JavaScript/Guide)。
 如果你已经使用过其他语言，你应该在读完手册后很快适应JavaScript的语法。
 
 ## 这个手册的结构是什么样子
