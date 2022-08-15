@@ -20,29 +20,24 @@ Javascript有三个很常见的[原始类型](https://developer.mozilla.org/en-U
 正如你猜想的，如果您对这些类型使用JavaScript的typeofOperator, you will看到这些名称：
 
 - `string`代表字符串的值，例如`"Hello, world"`
-- `number`对于像`42`的数字。JavaScript对于整数特定运行时的值，所以也同样没有，所以不存在`int`和`float`的比较—所有东西都是`number`类型
+- `number`对于像`42`的数字。JavaScript对于整数特定运行时的值，所以也同样没有，所以不存在`int`和`float`的比较 —— 所有东西都是`number`类型
 - `boolean`对于`true`和`false`两个值
 
-- `string` represents string values like `"Hello, world"`
-- `number` is for numbers like `42`. JavaScript does not have a special runtime value for integers, so there's no equivalent to `int` or `float` - everything is simply `number`
-- `boolean` is for the two values `true` and `false`
+ > 类型名称`String`,`Number`,和`Boolean`（大写字母开头）是合法的，指向内置的类型，但是你代码很少会用到。 _总是_ 使用`string`,`number`或者`boolean`来定义类型。
 
-> The type names `String`, `Number`, and `Boolean` (starting with capital letters) are legal, but refer to some special built-in types that will very rarely appear in your code. _Always_ use `string`, `number`, or `boolean` for types.
+## Arrays数组
 
-## Arrays
+为了表明类似`[1, 2, 3]`的数组类型，你可以使用`number[]`语法；这个预发对于任何类型都适用。（例如`string[]`表示字符串数组等等）。
+你可能有些写法`Array<number>`，这两个是一样的。
+当我们学到 _泛型_ 的时候会讲到更多`T<U>`的语法。
 
-To specify the type of an array like `[1, 2, 3]`, you can use the syntax `number[]`; this syntax works for any type (e.g. `string[]` is an array of strings, and so on).
-You may also see this written as `Array<number>`, which means the same thing.
-We'll learn more about the syntax `T<U>` when we cover _generics_.
+> 注意`[number]`是另外的类型；将在[元组](/docs/handbook/2/objects.html#tuple-types)章节学习。
 
-> Note that `[number]` is a different thing; refer to the section on [Tuples](/docs/handbook/2/objects.html#tuple-types).
+## `any`任意类型
 
+TypeScript也有一个特殊的类型，`any`，当你不想给一个特定的值进行类型检查和错误提示的时候使用。
 
-## `any`
-
-TypeScript also has a special type, `any`, that you can use whenever you don't want a particular value to cause typechecking errors.
-
-When a value is of type `any`, you can access any properties of it (which will in turn be of type `any`), call it like a function, assign it to (or from) a value of any type, or pretty much anything else that's syntactically legal:
+当一个值的类型是`any`，你可以获取它的任意属性（取的值也是`any`类型），对它可以像函数一样调用，赋予一个任意类型的值，或者一些符合语法规则的操作：
 
 ```ts twoslash
 let obj: any = { x: 0 };
@@ -56,48 +51,46 @@ obj = "hello";
 const n: number = obj;
 ```
 
-The `any` type is useful when you don't want to write out a long type just to convince TypeScript that a particular line of code is okay.
+当你不想写一长串类型注释来说服TypeScript一行代码类型是类型正确的时候，`any`类型会非常有用。
 
 ### `noImplicitAny`
 
-When you don't specify a type, and TypeScript can't infer it from context, the compiler will typically default to `any`.
+当你不指明一个类型的时候，并且TypeScript不能从上下文推断的时候，编译器会把类型默认设置为`any`。
 
-You usually want to avoid this, though, because `any` isn't type-checked.
-Use the compiler flag [`noImplicitAny`](/tsconfig#noImplicitAny) to flag any implicit `any` as an error.
+你通常想要避免这个（要更规范，禁止用any），因为`any`类型不会被类型检查。
+可以给`tsconfig.js`设置[`noImplicitAny`](/tsconfig#noImplicitAny)配置，让隐式的`any`当做ts的一个报错。
 
-## Type Annotations on Variables
+## 变量的类型注释
 
-When you declare a variable using `const`, `var`, or `let`, you can optionally add a type annotation to explicitly specify the type of the variable:
+当你用`const`,`var`或者`let`声明变量的时候，你可以可选的增加一个类型注释来精确说明变量的类型：
 
 ```ts twoslash
 let myName: string = "Alice";
 //        ^^^^^^^^ Type annotation
 ```
 
-> TypeScript doesn't use "types on the left"-style declarations like `int x = 0;`
-> Type annotations will always go _after_ the thing being typed.
+> TypeScript不会使用类似`int x = 0;`的“类型在左”的声明语法。类型注释总是在类型声明 _之后_。
 
-In most cases, though, this isn't needed.
-Wherever possible, TypeScript tries to automatically _infer_ the types in your code.
-For example, the type of a variable is inferred based on the type of its initializer:
+然而在大多数情况下，这个是不需要的
+尽可能的情况下，TypeScript会尝试自动从你的代码里 _推断_ 类型。例如，一个变量的类型可以从它的初始值推断。
 
 ```ts twoslash
 // No type annotation needed -- 'myName' inferred as type 'string'
 let myName = "Alice";
 ```
 
-For the most part you don't need to explicitly learn the rules of inference.
-If you're starting out, try using fewer type annotations than you think - you might be surprised how few you need for TypeScript to fully understand what's going on.
+对于大多数情况下，你不需要精确了解推断的规则。
+如果你是新手，尝试尽可能少的在ts里写你想的类型注释—您可能会惊讶于 TypeScript 完全理解正在发生的事情时，所需的具体说明很少。
 
-## Functions
+## 函数
 
-Functions are the primary means of passing data around in JavaScript.
-TypeScript allows you to specify the types of both the input and output values of functions.
+在JavaScript里函数的原始意义是各处传递数据。
+TypeScript允许你指明函数的输入和输出的类型。
 
-### Parameter Type Annotations
+### 参数类型注释
 
-When you declare a function, you can add type annotations after each parameter to declare what types of parameters the function accepts.
-Parameter type annotations go after the parameter name:
+当你声明一个函数的时候，你可以在每个参数后面添加注释，声明函数需要什么类型的参数。
+参数类型注释写在参数名后面：
 
 ```ts twoslash
 // Parameter type annotation
@@ -107,7 +100,7 @@ function greet(name: string) {
 }
 ```
 
-When a parameter has a type annotation, arguments to that function will be checked:
+当一个参数有类型注释，这个函数的参数会被检查：
 
 ```ts twoslash
 // @errors: 2345
@@ -117,12 +110,13 @@ declare function greet(name: string): void;
 greet(42);
 ```
 
-> Even if you don't have type annotations on your parameters, TypeScript will still check that you passed the right number of arguments.
+> 即使你没有给你的参数写类型注释，TypeScript也会检查是否传递了正确个数的参数。
 
-### Return Type Annotations
 
-You can also add return type annotations.
-Return type annotations appear after the parameter list:
+### 返回值类型注释
+
+你也可以给家返回值添加类型注释。
+返回值类型声明在参数列表之后出现：
 
 ```ts twoslash
 function getFavoriteNumber(): number {
@@ -131,16 +125,16 @@ function getFavoriteNumber(): number {
 }
 ```
 
-Much like variable type annotations, you usually don't need a return type annotation because TypeScript will infer the function's return type based on its `return` statements.
-The type annotation in the above example doesn't change anything.
-Some codebases will explicitly specify a return type for documentation purposes, to prevent accidental changes, or just for personal preference.
+比较像变量类型注释，你通常不需要写返回值类型注释，因为TypeScript会从函数的返回值推断，基于`return`的声明值。
+在上面例子的类型注释不会改变什么东西。
+有些代码显式的指明返回类型是为了写清楚文档，避免偶发的改变，或者只是个人喜好。
 
-### Anonymous Functions
+### 匿名函数
 
-Anonymous functions are a little bit different from function declarations.
-When a function appears in a place where TypeScript can determine how it's going to be called, the parameters of that function are automatically given types.
+匿名函数和普通函数声明有点不同。
+当一个函数出现在 TypeScript 可以确定如何调用它的地方时，该函数的参数会自动被赋予类型。
 
-Here's an example:
+下面是例子：
 
 ```ts twoslash
 // @errors: 2551
@@ -158,20 +152,19 @@ names.forEach((s) => {
 });
 ```
 
-Even though the parameter `s` didn't have a type annotation, TypeScript used the types of the `forEach` function, along with the inferred type of the array, to determine the type `s` will have.
+尽管参数`s`没有类型注释，TypeScript使用了`forEach`函数的类型推断，连同数组的推断类型一起，来确定了`s`类型会有的类型。
 
-This process is called _contextual typing_ because the _context_ that the function occurred within informs what type it should have.
+这个过程叫做 _上下文类型_ 因为函数发生的 _上下文_ 告知了它应该有的类型。
 
-Similar to the inference rules, you don't need to explicitly learn how this happens, but understanding that it _does_ happen can help you notice when type annotations aren't needed.
-Later, we'll see more examples of how the context that a value occurs in can affect its type.
+类似类型推断规则，你不需要精确学习这个如何发生的，但是理解这个让你知道有些类型注释不必要。
+之后，我们将看到更多关于值出现的上下文如何影响其类型的示例。
 
-## Object Types
+## 对象类型
 
-Apart from primitives, the most common sort of type you'll encounter is an _object type_.
-This refers to any JavaScript value with properties, which is almost all of them!
-To define an object type, we simply list its properties and their types.
+除了原生类型，你将遇见的更常见的类型是 _对象类型_。这个指任何JavaScript里有属性的值，意味着几乎js里的所有值！
+为了定义对象类型，我们只用列出他们的属性和类型。
 
-For example, here's a function that takes a point-like object:
+例如，这个是一个函数，接收一个类似坐标的对象：
 
 ```ts twoslash
 // The parameter's type annotation is an object type
@@ -183,16 +176,16 @@ function printCoord(pt: { x: number; y: number }) {
 printCoord({ x: 3, y: 7 });
 ```
 
-Here, we annotated the parameter with a type with two properties - `x` and `y` - which are both of type `number`.
-You can use `,` or `;` to separate the properties, and the last separator is optional either way.
+这里我们我们给参数声明，用了两个属性—`x`和`y`—两个都是`number`数字类型。
+你可以使用`,`或者`;`来分隔不同的属性，然后最后一个分隔符是可选的。
 
-The type part of each property is also optional.
-If you don't specify a type, it will be assumed to be `any`.
+每个属性值也是可以可选的。
+如果你不想指明一个类型，它可以被声明为`any`类型。
 
-### Optional Properties
+### 可选属性
 
-Object types can also specify that some or all of their properties are _optional_.
-To do this, add a `?` after the property name:
+对象类型也可以指明属性的一些或者所有属性是可选的。
+为了实现这个，在属性名后面增加一个`?`：
 
 ```ts twoslash
 function printName(obj: { first: string; last?: string }) {
@@ -202,9 +195,8 @@ function printName(obj: { first: string; last?: string }) {
 printName({ first: "Bob" });
 printName({ first: "Alice", last: "Alisson" });
 ```
-
-In JavaScript, if you access a property that doesn't exist, you'll get the value `undefined` rather than a runtime error.
-Because of this, when you _read_ from an optional property, you'll have to check for `undefined` before using it.
+在JavaScript里，如果你尝试获取一个不存在的属性，你将会得到`undefined`而不是运行时错误。
+因为这个，当你从一个可选值 _获取_ 值的时候，你要在使用前检查他是不是`undefined`的值。
 
 ```ts twoslash
 // @errors: 2532
@@ -221,18 +213,18 @@ function printName(obj: { first: string; last?: string }) {
 }
 ```
 
-## Union Types
+## 联合类型
 
-TypeScript's type system allows you to build new types out of existing ones using a large variety of operators.
-Now that we know how to write a few types, it's time to start _combining_ them in interesting ways.
+TypeScript的类型系统允许你从**现存的类型构建新的类型**，可以使用一大堆提供的方法。
+现在我们知道了如何写一点类型，是时候开始用有趣的方式组合他们了。
 
-### Defining a Union Type
+### 定义一个联合类型
 
-The first way to combine types you might see is a _union_ type.
-A union type is a type formed from two or more other types, representing values that may be _any one_ of those types.
-We refer to each of these types as the union's _members_.
+你将接触的最初组合类型方式可能是 _union_ 类型。
+一个联合类型是一个从两个或更多类型组合的类型，代表这个值可能是那些值的 _任意一个_。
+我们将这些类型中的每一种称为联合类型的 _成员_。 
 
-Let's write a function that can operate on strings or numbers:
+让我们写一个函数可以操作字符串或者数字：
 
 ```ts twoslash
 // @errors: 2345
@@ -247,13 +239,13 @@ printId("202");
 printId({ myID: 22342 });
 ```
 
-### Working with Union Types
+### 使用联合类型工作
 
-It's easy to _provide_ a value matching a union type - simply provide a type matching any of the union's members.
-If you _have_ a value of a union type, how do you work with it?
+_提供_ 一个值匹配联合类型很容易—仅仅需要提供任何一个联合类型成员匹配的值。
+如果你 _有_ 一个联合类型的值，你将如何使用它？
 
-TypeScript will only allow an operation if it is valid for _every_ member of the union.
-For example, if you have the union `string | number`, you can't use methods that are only available on `string`:
+TypeScript只会允许union里的所有成员都满足的操作发生。
+例如，如果你有一个联合类型`string | number`，你不能使用仅仅在`string`上有的方法：
 
 ```ts twoslash
 // @errors: 2339
@@ -262,10 +254,10 @@ function printId(id: number | string) {
 }
 ```
 
-The solution is to _narrow_ the union with code, the same as you would in JavaScript without type annotations.
-_Narrowing_ occurs when TypeScript can deduce a more specific type for a value based on the structure of the code.
+解决方法是用代码 _缩小_ 联合类型的值，就像你在JavaScript没有用类型注释的写法一样。
+当 TypeScript 可以根据代码的结构为某个值推断出更具体的类型时，就会发生 _缩小_。
 
-For example, TypeScript knows that only a `string` value will have a `typeof` value `"string"`:
+例如，TypeScript知道只有`string`值将会有一个`typeof`的值`"string"`：
 
 ```ts twoslash
 function printId(id: number | string) {
@@ -279,7 +271,7 @@ function printId(id: number | string) {
 }
 ```
 
-Another example is to use a function like `Array.isArray`:
+另外一个例子是使用类似`Array.isArray`的函数：
 
 ```ts twoslash
 function welcomePeople(x: string[] | string) {
@@ -293,11 +285,11 @@ function welcomePeople(x: string[] | string) {
 }
 ```
 
-Notice that in the `else` branch, we don't need to do anything special - if `x` wasn't a `string[]`, then it must have been a `string`.
+注意在else分支，我们不需要做任何声明事情—如果`x`不是一个`string[]`类型，则他一定是`string`类型。
 
-Sometimes you'll have a union where all the members have something in common.
-For example, both arrays and strings have a `slice` method.
-If every member in a union has a property in common, you can use that property without narrowing:
+有时候你将有些联合类型，然而他们所有成员有一些类似之处。
+例如，数组和字符串类型都有`slice`方法。
+如果每个联合类型的成员都有共同的类型，你可以不需要缩小就是用属性值：
 
 ```ts twoslash
 // Return type is inferred as number[] | string
@@ -306,19 +298,25 @@ function getFirstThree(x: number[] | string) {
 }
 ```
 
+> 一个 _联合类型_ 拥有这些属性的交集可能让你迷惑。
+> 这个不是偶然 — 名字 _联合_ 就是从这种类型理论来的。
+> _联合类型_ `number | string`是由每种类型的值并集组成。
+> 注意给定两个类型，每个类型都有对应的事实，只有这些事实的 _交集_ 部分适合于集合本身的 _并集_。
+> 例如，如果我们有一屋子高个子人带着帽子，然后另一个房间有西班牙的演讲者们带着帽子，在组合两个房间后，我们唯一知道的事情是他们 _每一个_ 人必须带着帽子。
+
 > It might be confusing that a _union_ of types appears to have the _intersection_ of those types' properties.
 > This is not an accident - the name _union_ comes from type theory.
 > The _union_ `number | string` is composed by taking the union _of the values_ from each type.
 > Notice that given two sets with corresponding facts about each set, only the _intersection_ of those facts applies to the _union_ of the sets themselves.
 > For example, if we had a room of tall people wearing hats, and another room of Spanish speakers wearing hats, after combining those rooms, the only thing we know about _every_ person is that they must be wearing a hat.
 
-## Type Aliases
+## 类型别名
 
-We've been using object types and union types by writing them directly in type annotations.
-This is convenient, but it's common to want to use the same type more than once and refer to it by a single name.
+我们已经通过直接在类型注释列写，使用了对象类型和联合类型。（上面都是原生手写）
+这是个很方便，但是当我们想要使用同一个类型多次使用并且用一个单独名字获取也很常见。
 
-A _type alias_ is exactly that - a _name_ for any _type_.
-The syntax for a type alias is:
+一个 _类型别名_ 就是为了和这个用途—一个给任意 _类型_ 的 _名字_。
+类型别名的语法是：
 
 ```ts twoslash
 type Point = {
@@ -335,13 +333,15 @@ function printCoord(pt: Point) {
 printCoord({ x: 100, y: 100 });
 ```
 
-You can actually use a type alias to give a name to any type at all, not just an object type.
-For example, a type alias can name a union type:
+你可以事实上用用类型别名来给任意类型一个名字，不只是对象类型。
+例如，一个类型别名可以命名一个联合类型：
 
 ```ts twoslash
 type ID = number | string;
 ```
 
+注意别名 _只是_ 别名 — 你不能使用类型别名来创建同一个类型的不同/独特的“版本”。
+当你使用别名的时候，它特定指明了如果你已经写了
 Note that aliases are _only_ aliases - you cannot use type aliases to create different/distinct "versions" of the same type.
 When you use the alias, it's exactly as if you had written the aliased type.
 In other words, this code might _look_ illegal, but is OK according to TypeScript because both types are aliases for the same type:

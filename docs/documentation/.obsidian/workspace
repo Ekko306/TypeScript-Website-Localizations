@@ -4,14 +4,13 @@
     "type": "split",
     "children": [
       {
-        "id": "4d40bc24d9d3404e",
+        "id": "d724b5ba5be2b754",
         "type": "leaf",
         "state": {
-          "type": "markdown",
+          "type": "diff-view",
           "state": {
-            "file": "zh/handbook-v2/Everyday Types.md",
-            "mode": "source",
-            "source": false
+            "file": "docs/documentation/.obsidian/workspace",
+            "staged": false
           }
         }
       }
@@ -136,13 +135,14 @@
     "direction": "horizontal",
     "width": 300
   },
-  "active": "4d40bc24d9d3404e",
+  "active": "8781dbcfe9fee85c",
   "lastOpenFiles": [
-    "zh/handbook-v2/The Handbook.md",
-    "zh/handbook-v2/Everyday Types.md",
     "zh/handbook-v2/Basics.md",
-    "2022-08-04.md",
+    "tsconfig.md",
+    "zh/handbook-v2/Everyday Types.md",
     "zh/get-started/TS for JS Programmers.md",
+    "zh/handbook-v2/The Handbook.md",
+    "2022-08-04.md",
     "en/Nightly Builds.md"
   ]
 }
