@@ -304,12 +304,6 @@ function getFirstThree(x: number[] | string) {
 > 注意给定两个类型，每个类型都有对应的事实，只有这些事实的 _交集_ 部分适合于集合本身的 _并集_。
 > 例如，如果我们有一屋子高个子人带着帽子，然后另一个房间有西班牙的演讲者们带着帽子，在组合两个房间后，我们唯一知道的事情是他们 _每一个_ 人必须带着帽子。
 
-> It might be confusing that a _union_ of types appears to have the _intersection_ of those types' properties.
-> This is not an accident - the name _union_ comes from type theory.
-> The _union_ `number | string` is composed by taking the union _of the values_ from each type.
-> Notice that given two sets with corresponding facts about each set, only the _intersection_ of those facts applies to the _union_ of the sets themselves.
-> For example, if we had a room of tall people wearing hats, and another room of Spanish speakers wearing hats, after combining those rooms, the only thing we know about _every_ person is that they must be wearing a hat.
-
 ## 类型别名
 
 我们已经通过直接在类型注释列写，使用了对象类型和联合类型。（上面都是原生手写）
@@ -341,10 +335,8 @@ type ID = number | string;
 ```
 
 注意别名 _只是_ 别名 — 你不能使用类型别名来创建同一个类型的不同/独特的“版本”。
-当你使用别名的时候，它特定指明了如果你已经写了
-Note that aliases are _only_ aliases - you cannot use type aliases to create different/distinct "versions" of the same type.
-When you use the alias, it's exactly as if you had written the aliased type.
-In other words, this code might _look_ illegal, but is OK according to TypeScript because both types are aliases for the same type:
+当您使用别名时，就好像您已经编写了别名类型。
+换句话说，下面这段代码可能 _看起来_ 是非法的，但根据 TypeScript 是可以的，因为这两种类型都是同一类型的别名（UserInputSanitizedString虽然取了名字，但还是可以和string比较是同一个）：
 
 ```ts twoslash
 declare function getInput(): string;
@@ -363,9 +355,9 @@ let userInput = sanitizeInput(getInput());
 userInput = "new input";
 ```
 
-## Interfaces
+## 接口
 
-An _interface declaration_ is another way to name an object type:
+一个 _接口声明_ 是另一个方式命名一个对象类型：
 
 ```ts twoslash
 interface Point {
@@ -381,14 +373,13 @@ function printCoord(pt: Point) {
 printCoord({ x: 100, y: 100 });
 ```
 
-Just like when we used a type alias above, the example works just as if we had used an anonymous object type.
-TypeScript is only concerned with the _structure_ of the value we passed to `printCoord` - it only cares that it has the expected properties.
-Being concerned only with the structure and capabilities of types is why we call TypeScript a _structurally typed_ type system.
+就像我们在上面使用类型别名一样，上面例子在我们使用一个匿名对象类型时也适用。
+TypeScript知识考虑我们传递给`printCoord`的 _数据结构_ — 他只会关系他有期望的属性。
 
-### Differences Between Type Aliases and Interfaces
+### TypeAliase类型别名和Interfaces接口的区别
 
-Type aliases and interfaces are very similar, and in many cases you can choose between them freely.
-Almost all features of an `interface` are available in `type`, the key distinction is that a type cannot be re-opened to add new properties vs an interface which is always extendable.
+类型别名和接口非常相似，然后再很多情况可以两者间随意选择。
+几乎`interface`的所有特性都能用`type`实现，关键区分是类型不能被再次打开然后赋予新值，而接口是总是可扩展的。
 
 <table class='full-width-table'>
   <tbody>
@@ -398,7 +389,7 @@ Almost all features of an `interface` are available in `type`, the key distincti
     </tr>
     <tr>
       <td>
-        <p>Extending an interface</p>
+        <p>拓展一个接口</p>
         <code><pre>
 interface Animal {
   name: string
@@ -412,7 +403,7 @@ bear.honey
         </pre></code>
       </td>
       <td>
-        <p>Extending a type via intersections</p>
+        <p>通过\&交集符号拓展类型别名</p>
         <code><pre>
 type Animal = {
   name: string
@@ -428,7 +419,7 @@ bear.honey;
     </tr>
     <tr>
       <td>
-        <p>Adding new fields to an existing interface</p>
+        <p>给现有interface添加新字段</p>
         <code><pre>
 interface Window {
   title: string
@@ -441,7 +432,7 @@ window.ts.transpileModule(src, {});
         </pre></code>
       </td>
       <td>
-        <p>A type cannot be changed after being created</p>
+        <p>一个类型别名在创建后不能被修改</p>
         <code><pre>
 type Window = {
   title: string
@@ -456,48 +447,47 @@ type Window = {
     </tbody>
 </table>
 
-You'll learn more about these concepts in later chapters, so don't worry if you don't understand all of these right away.
+你将会在后面章节学到更多概念，所以不要担心如果你不能理解这些所有概念。
 
-- Prior to TypeScript version 4.2, type alias names [_may_ appear in error messages](/play?#code/PTAEGEHsFsAcEsA2BTATqNrLusgzngIYDm+oA7koqIYuYQJ56gCueyoAUCKAC4AWHAHaFcoSADMaQ0PCG80EwgGNkALk6c5C1EtWgAsqOi1QAb06groEbjWg8vVHOKcAvpokshy3vEgyyMr8kEbQJogAFND2YREAlOaW1soBeJAoAHSIkMTRmbbI8e6aPMiZxJmgACqCGKhY6ABGyDnkFFQ0dIzMbBwCwqIccabcYLyQoKjIEmh8kwN8DLAc5PzwwbLMyAAeK77IACYaQSEjUWZWhfYAjABMAMwALA+gbsVjoADqgjKESytQPxCHghAByXigYgBfr8LAsYj8aQMUASbDQcRSExCeCwFiIQh+AKfAYyBiQFgOPyIaikSGLQo0Zj-aazaY+dSaXjLDgAGXgAC9CKhDqAALxJaw2Ib2RzOISuDycLw+ImBYKQflCkWRRD2LXCw6JCxS1JCdJZHJ5RAFIbFJU8ADKC3WzEcnVZaGYE1ABpFnFOmsFhsil2uoHuzwArO9SmAAEIsSFrZB-GgAjjA5gtVN8VCEc1o1C4Q4AGlR2AwO1EsBQoAAbvB-gJ4HhPgB5aDwem-Ph1TCV3AEEirTp4ELtRbTPD4vwKjOfAuioSQHuDXBcnmgACC+eCONFEs73YAPGGZVT5cRyyhiHh7AAON7lsG3vBggB8XGV3l8-nVISOgghxoLq9i7io-AHsayRWGaFrlFauq2rg9qaIGQHwCBqChtKdgRo8TxRjeyB3o+7xAA), sometimes in place of the equivalent anonymous type (which may or may not be desirable). Interfaces will always be named in error messages.
-- Type aliases may not participate [in declaration merging, but interfaces can](/play?#code/PTAEEEDtQS0gXApgJwGYEMDGjSfdAIx2UQFoB7AB0UkQBMAoEUfO0Wgd1ADd0AbAK6IAzizp16ALgYM4SNFhwBZdAFtV-UAG8GoPaADmNAcMmhh8ZHAMMAvjLkoM2UCvWad+0ARL0A-GYWVpA29gyY5JAWLJAwGnxmbvGgALzauvpGkCZmAEQAjABMAMwALLkANBl6zABi6DB8okR4Jjg+iPSgABboovDk3jjo5pbW1d6+dGb5djLwAJ7UoABKiJTwjThpnpnGpqPBoTLMAJrkArj4kOTwYmycPOhW6AR8IrDQ8N04wmo4HHQCwYi2Waw2W1S6S8HX8gTGITsQA).
-- Interfaces may only be used to [declare the shapes of objects, not rename primitives](/play?#code/PTAEAkFMCdIcgM6gC4HcD2pIA8CGBbABwBtIl0AzUAKBFAFcEBLAOwHMUBPQs0XFgCahWyGBVwBjMrTDJMAshOhMARpD4tQ6FQCtIE5DWoixk9QEEWAeV37kARlABvaqDegAbrmL1IALlAEZGV2agBfampkbgtrWwMAJlAAXmdXdy8ff0Dg1jZwyLoAVWZ2Lh5QVHUJflAlSFxROsY5fFAWAmk6CnRoLGwmILzQQmV8JmQmDzI-SOiKgGV+CaYAL0gBBdyy1KCQ-Pn1AFFplgA5enw1PtSWS+vCsAAVAAtB4QQWOEMKBuYVUiVCYvYQsUTQcRSBDGMGmKSgAAa-VEgiQe2GLgKQA).
-- Interface names will [_always_ appear in their original form](/play?#code/PTAEGEHsFsAcEsA2BTATqNrLusgzngIYDm+oA7koqIYuYQJ56gCueyoAUCKAC4AWHAHaFcoSADMaQ0PCG80EwgGNkALk6c5C1EtWgAsqOi1QAb06groEbjWg8vVHOKcAvpokshy3vEgyyMr8kEbQJogAFND2YREAlOaW1soBeJAoAHSIkMTRmbbI8e6aPMiZxJmgACqCGKhY6ABGyDnkFFQ0dIzMbBwCwqIccabcYLyQoKjIEmh8kwN8DLAc5PzwwbLMyAAeK77IACYaQSEjUWY2Q-YAjABMAMwALA+gbsVjNXW8yxySoAADaAA0CCaZbPh1XYqXgOIY0ZgmcK0AA0nyaLFhhGY8F4AHJmEJILCWsgZId4NNfIgGFdcIcUTVfgBlZTOWC8T7kAJ42G4eT+GS42QyRaYbCgXAEEguTzeXyCjDBSAAQSE8Ai0Xsl0K9kcziExDeiQs1lAqSE6SyOTy0AKQ2KHk4p1V6s1OuuoHuzwArMagA) in error messages, but _only_ when they are used by name.
+- 对于TypeScript低于4.2的版本，类型别名 [_可能_ 会有错误信息](/play?#code/PTAEGEHsFsAcEsA2BTATqNrLusgzngIYDm+oA7koqIYuYQJ56gCueyoAUCKAC4AWHAHaFcoSADMaQ0PCG80EwgGNkALk6c5C1EtWgAsqOi1QAb06groEbjWg8vVHOKcAvpokshy3vEgyyMr8kEbQJogAFND2YREAlOaW1soBeJAoAHSIkMTRmbbI8e6aPMiZxJmgACqCGKhY6ABGyDnkFFQ0dIzMbBwCwqIccabcYLyQoKjIEmh8kwN8DLAc5PzwwbLMyAAeK77IACYaQSEjUWZWhfYAjABMAMwALA+gbsVjoADqgjKESytQPxCHghAByXigYgBfr8LAsYj8aQMUASbDQcRSExCeCwFiIQh+AKfAYyBiQFgOPyIaikSGLQo0Zj-aazaY+dSaXjLDgAGXgAC9CKhDqAALxJaw2Ib2RzOISuDycLw+ImBYKQflCkWRRD2LXCw6JCxS1JCdJZHJ5RAFIbFJU8ADKC3WzEcnVZaGYE1ABpFnFOmsFhsil2uoHuzwArO9SmAAEIsSFrZB-GgAjjA5gtVN8VCEc1o1C4Q4AGlR2AwO1EsBQoAAbvB-gJ4HhPgB5aDwem-Ph1TCV3AEEirTp4ELtRbTPD4vwKjOfAuioSQHuDXBcnmgACC+eCONFEs73YAPGGZVT5cRyyhiHh7AAON7lsG3vBggB8XGV3l8-nVISOgghxoLq9i7io-AHsayRWGaFrlFauq2rg9qaIGQHwCBqChtKdgRo8TxRjeyB3o+7xAA)，（就是有时候报错，有时候不报错），有时候可能在等效的匿名类型出报错信息（可能需要也可能不需要）。接口始终在类型系统中出现。（看例子里，就是低版本对于Omit等操作后的不能定位到type名称，但是高版本可以）
+- 类型别名可能[不会参与声明合并，但是接口可以](/play?#code/PTAEEEDtQS0gXApgJwGYEMDGjSfdAIx2UQFoB7AB0UkQBMAoEUfO0Wgd1ADd0AbAK6IAzizp16ALgYM4SNFhwBZdAFtV-UAG8GoPaADmNAcMmhh8ZHAMMAvjLkoM2UCvWad+0ARL0A-GYWVpA29gyY5JAWLJAwGnxmbvGgALzauvpGkCZmAEQAjABMAMwALLkANBl6zABi6DB8okR4Jjg+iPSgABboovDk3jjo5pbW1d6+dGb5djLwAJ7UoABKiJTwjThpnpnGpqPBoTLMAJrkArj4kOTwYmycPOhW6AR8IrDQ8N04wmo4HHQCwYi2Waw2W1S6S8HX8gTGITsQA)。（例如上面Window声明合并）
+- 接口可能只会被用作[声明对象的类型，但是不能重命名原生类型](/play?#code/PTAEAkFMCdIcgM6gC4HcD2pIA8CGBbABwBtIl0AzUAKBFAFcEBLAOwHMUBPQs0XFgCahWyGBVwBjMrTDJMAshOhMARpD4tQ6FQCtIE5DWoixk9QEEWAeV37kARlABvaqDegAbrmL1IALlAEZGV2agBfampkbgtrWwMAJlAAXmdXdy8ff0Dg1jZwyLoAVWZ2Lh5QVHUJflAlSFxROsY5fFAWAmk6CnRoLGwmILzQQmV8JmQmDzI-SOiKgGV+CaYAL0gBBdyy1KCQ-Pn1AFFplgA5enw1PtSWS+vCsAAVAAtB4QQWOEMKBuYVUiVCYvYQsUTQcRSBDGMGmKSgAAa-VEgiQe2GLgKQA)。
+- 接口名字将[总会在错误信息里显示原始的形式](/play?#code/PTAEGEHsFsAcEsA2BTATqNrLusgzngIYDm+oA7koqIYuYQJ56gCueyoAUCKAC4AWHAHaFcoSADMaQ0PCG80EwgGNkALk6c5C1EtWgAsqOi1QAb06groEbjWg8vVHOKcAvpokshy3vEgyyMr8kEbQJogAFND2YREAlOaW1soBeJAoAHSIkMTRmbbI8e6aPMiZxJmgACqCGKhY6ABGyDnkFFQ0dIzMbBwCwqIccabcYLyQoKjIEmh8kwN8DLAc5PzwwbLMyAAeK77IACYaQSEjUWY2Q-YAjABMAMwALA+gbsVjNXW8yxySoAADaAA0CCaZbPh1XYqXgOIY0ZgmcK0AA0nyaLFhhGY8F4AHJmEJILCWsgZId4NNfIgGFdcIcUTVfgBlZTOWC8T7kAJ42G4eT+GS42QyRaYbCgXAEEguTzeXyCjDBSAAQSE8Ai0Xsl0K9kcziExDeiQs1lAqSE6SyOTy0AKQ2KHk4p1V6s1OuuoHuzwArMagA)，但是 _只有_ 当他们被名字声明使用的时候出现。（不能用匿名，否则肯定没名字）
 
-For the most part, you can choose based on personal preference, and TypeScript will tell you if it needs something to be the other kind of declaration. If you would like a heuristic, use `interface` until you need to use features from `type`.
+对于大多数情况，你可以从个人喜好选择，并且TypeScript将会告诉你是否要用另一种声明方式当你要用些额外特性的时候。如果你想要启发式，请使用`interface`直到你必须使用`type`的特性。
 
-## Type Assertions
+## 类型断言
 
-Sometimes you will have information about the type of a value that TypeScript can't know about.
+有时你会得到关于 TypeScript 无法知道的值类型的信息。（TypeScript只会从代码层面考虑很多，但是有些情况是你自己排除了必定会出现的）
 
-For example, if you're using `document.getElementById`, TypeScript only knows that this will return _some_ kind of `HTMLElement`, but you might know that your page will always have an `HTMLCanvasElement` with a given ID.
+例如，如果你使用`document.getElementById`，TypeScript只会知道哪它会返回`HTMLElement`的 _某些_ 类型，但是你看知道你的对于给的ID页面总会有一个`HTMLCanvasElement`。
 
-In this situation, you can use a _type assertion_ to specify a more specific type:
+对于这种情况，你可以用一个 _类型断言_ 来指定更加具体的类型：
 
 ```ts twoslash
 const myCanvas = document.getElementById("main_canvas") as HTMLCanvasElement;
 ```
 
-Like a type annotation, type assertions are removed by the compiler and won't affect the runtime behavior of your code.
+就像类型注释一样，类型断言也会被编译器移除并且不会影响你代码的运行时。
 
-You can also use the angle-bracket syntax (except if the code is in a `.tsx` file), which is equivalent:
+你也可以使用尖括号语法（不能在`.tsx`文件里），和as语法是等效的：
 
 ```ts twoslash
 const myCanvas = <HTMLCanvasElement>document.getElementById("main_canvas");
 ```
+> 提醒：因为类型断言在编译时被删除，所以没有与类型断言关联的运行时检查。
+> 如果类型断言错了，不会有报错或者null生成。（就是自己定义的确定性断言错了，之后运行时的不一致报错ts是出来的）
 
-> Reminder: Because type assertions are removed at compile-time, there is no runtime checking associated with a type assertion.
-> There won't be an exception or `null` generated if the type assertion is wrong.
-
-TypeScript only allows type assertions which convert to a _more specific_ or _less specific_ version of a type.
-This rule prevents "impossible" coercions like:
+TypeScript只会允许类型断言对于同一个类型别名的 _更精确_ 或者 _更不精确_ 进行转换。
+此规则可防止“不可能”的强制，例如：
 
 ```ts twoslash
 // @errors: 2352
 const x = "hello" as number;
 ```
 
-Sometimes this rule can be too conservative and will disallow more complex coercions that might be valid.
-If this happens, you can use two assertions, first to `any` (or `unknown`, which we'll introduce later), then to the desired type:
+有时候这个规则可能会过于保守，并且不允许可能有效的更复杂的强制转换。
+如果和这个发生，你可以用两次断言，首先转换为`any`（或者`unknown`， 之后会介绍），然后转换为想要的类型：
 
 ```ts twoslash
 declare const expr: any;
@@ -506,11 +496,11 @@ type T = { a: 1; b: 2; c: 3 };
 const a = (expr as any) as T;
 ```
 
-## Literal Types
+## 文字类型
 
-In addition to the general types `string` and `number`, we can refer to _specific_ strings and numbers in type positions.
+对于通用的类型`string`和`number`外，我们还可以在类型位置指明 _特定的_ 字符串和数字。
 
-One way to think about this is to consider how JavaScript comes with different ways to declare a variable. Both `var` and `let` allow for changing what is held inside the variable, and `const` does not. This is reflected in how TypeScript creates types for literals.
+这样思考的方式是思考JavaScript有两种方式声明变量。`var`和`let`都允许修改定义的变量，但是`const`不行。这个也影响了TypeScript创建文字类型的方式。（下面constantString被定义死了具体的字符串内容）
 
 ```ts twoslash
 let changingString = "Hello World";
@@ -527,7 +517,7 @@ constantString;
 // ^?
 ```
 
-By themselves, literal types aren't very valuable:
+就其本身而言，文字类型并不是很有价值：
 
 ```ts twoslash
 // @errors: 2322
@@ -538,9 +528,9 @@ x = "hello";
 x = "howdy";
 ```
 
-It's not much use to have a variable that can only have one value!
+变量只能有一个值并没有多大用处！
 
-But by _combining_ literals into unions, you can express a much more useful concept - for example, functions that only accept a certain set of known values:
+但是通过 _组合_ 文本变量到联合类型，你可以表达一个更有用的概念—例如，函数只允许特定允许值的集合：
 
 ```ts twoslash
 // @errors: 2345
@@ -551,7 +541,7 @@ printText("Hello, world", "left");
 printText("G'day, mate", "centre");
 ```
 
-Numeric literal types work the same way:
+数字文本类型也可以同样方式工作：
 
 ```ts twoslash
 function compare(a: string, b: string): -1 | 0 | 1 {
@@ -559,7 +549,7 @@ function compare(a: string, b: string): -1 | 0 | 1 {
 }
 ```
 
-Of course, you can combine these with non-literal types:
+当然你可以将他们和非文本类型组合：
 
 ```ts twoslash
 // @errors: 2345
@@ -574,14 +564,15 @@ configure("auto");
 configure("automatic");
 ```
 
-There's one more kind of literal type: boolean literals.
-There are only two boolean literal types, and as you might guess, they are the types `true` and `false`.
-The type `boolean` itself is actually just an alias for the union `true | false`.
+还有一种文本类型：布尔文本
+只有两种布尔文本类型，正如你能猜到的的，他们就是类型`true`和`false`。
+`boolean`类型本身就是`true | false`的联合类型。
 
-### Literal Inference
+### 文本接口
 
-When you initialize a variable with an object, TypeScript assumes that the properties of that object might change values later.
-For example, if you wrote code like this:
+当你对一个变量初始化值的时候，TypeScript猜测那个对象的属性值可能之后会改变值。
+例如，你可能写下面的代码：
+
 
 ```ts twoslash
 declare const someCondition: boolean;
@@ -592,10 +583,10 @@ if (someCondition) {
 }
 ```
 
-TypeScript doesn't assume the assignment of `1` to a field which previously had `0` is an error.
-Another way of saying this is that `obj.counter` must have the type `number`, not `0`, because types are used to determine both _reading_ and _writing_ behavior.
+TypeScript不会认为给一个之前是`0`的字段赋予`1`是一个错误。
+另外一个方式表述这个是，`obj.counter`必须有类型`number`，而不是`0`这种固定的文本类型，因为类型要用来同时决定 _读_ 和 _写_ 行为。
 
-The same applies to strings:
+这个对字符串类似：
 
 ```ts twoslash
 // @errors: 2345
@@ -605,25 +596,24 @@ const req = { url: "https://example.com", method: "GET" };
 handleRequest(req.url, req.method);
 ```
 
-In the above example `req.method` is inferred to be `string`, not `"GET"`. Because code can be evaluated between the creation of `req` and the call of `handleRequest` which could assign a new string like `"GUESS"` to `req.method`, TypeScript considers this code to have an error.
+在上述例子中`req.method`被推断为`string`类型，不是`"GET"`这种文本类型。因为代码中在赋予特定`req`和调用`handleRequest`之间可能把`req.method`赋予像`"GUESS"`这种值，TypeScript认为这种代码有错误。
 
-There are two ways to work around this.
+有两种方式解决这个问题。
 
-1. You can change the inference by adding a type assertion in either location:
+1. 你可以通过在两种位置添加类型断言改变推断内容：
 
    ```ts twoslash
    declare function handleRequest(url: string, method: "GET" | "POST"): void;
    // ---cut---
    // Change 1:
    const req = { url: "https://example.com", method: "GET" as "GET" };
-   // Change 2
+   // Change 2：
    handleRequest(req.url, req.method as "GET");
    ```
+   改变1意味着“我认为`req.method`总会是固定的文本类型`"GET"`”，阻止之后对于这个字段的可能是`GUESS`的猜想。
+   改变2意味着“我出于某些原因知道`req.method`有`"GET"`类型”。   
 
-   Change 1 means "I intend for `req.method` to always have the _literal type_ `"GET"`", preventing the possible assignment of `"GUESS"` to that field after.
-   Change 2 means "I know for other reasons that `req.method` has the value `"GET"`".
-
-2. You can use `as const` to convert the entire object to be type literals:
+2. 你可以使用`as const`来将整个对象转换为文本类型：
 
    ```ts twoslash
    declare function handleRequest(url: string, method: "GET" | "POST"): void;
@@ -632,24 +622,24 @@ There are two ways to work around this.
    handleRequest(req.url, req.method);
    ```
 
-The `as const` suffix acts like `const` but for the type system, ensuring that all properties are assigned the literal type instead of a more general version like `string` or `number`.
+`as const`后缀的作用类似于`const`，但是对于类型系统，是确保为所有属性赋予文本类型，而不是更通用的版本例如`string`或`number`
 
-## `null` and `undefined`
+## `null` 和 `undefined`
 
-JavaScript has two primitive values used to signal absent or uninitialized value: `null` and `undefined`.
+JavaScript有两种原生类型来表示不存在或未初始化的值：`null`和`undefined`。
 
-TypeScript has two corresponding _types_ by the same names. How these types behave depends on whether you have the [`strictNullChecks`](/tsconfig#strictNullChecks) option on.
+TypeScript有两个对应同名的类型（null和undefined）。这两个值的行为取决于你是否开启了[`strictNullChecks`](/tsconfig#strictNullChecks)选项。
 
-### `strictNullChecks` off
+### 关闭`strictNullChecks`
 
-With [`strictNullChecks`](/tsconfig#strictNullChecks) _off_, values that might be `null` or `undefined` can still be accessed normally, and the values `null` and `undefined` can be assigned to a property of any type.
-This is similar to how languages without null checks (e.g. C#, Java) behave.
-The lack of checking for these values tends to be a major source of bugs; we always recommend people turn [`strictNullChecks`](/tsconfig#strictNullChecks) on if it's practical to do so in their codebase.
+关闭了[`strictNullChecks`](/tsconfig#strictNullChecks)选项，可能会是`null`或`undefined`的值可以还被正常获取到，并且`null`和`undefined`的值可以被赋予任何一个类型的属性。
+这个类似于一些没有null检查的语言的行为（例如C#, Java）。缺少这些值的检查是造成bug的主要原因之一；我们总是建议人们开启[`strictNullChecks`](/tsconfig#strictNullChecks)，如果在他们代码库中这样做是可行的。
 
-### `strictNullChecks` on
 
-With [`strictNullChecks`](/tsconfig#strictNullChecks) _on_, when a value is `null` or `undefined`, you will need to test for those values before using methods or properties on that value.
-Just like checking for `undefined` before using an optional property, we can use _narrowing_ to check for values that might be `null`:
+### 开启`strictNullChecks`
+
+开启了[`strictNullChecks`](/tsconfig#strictNullChecks)选项，当一个值是`null`或`undefined`，你将会需要在使用这个值的方法或者属性之前检测这些值。
+就像检查在使用可选属性之前检查`undefined`一样，我们可以 _缩小_ 他们来检查可能是`null`的值：
 
 ```ts twoslash
 function doSomething(x: string | null) {
@@ -661,10 +651,10 @@ function doSomething(x: string | null) {
 }
 ```
 
-### Non-null Assertion Operator (Postfix `!`)
+### 非空断言运算符 (前缀 `!`)
 
-TypeScript also has a special syntax for removing `null` and `undefined` from a type without doing any explicit checking.
-Writing `!` after any expression is effectively a type assertion that the value isn't `null` or `undefined`:
+TypeScript也有一些特殊的语法来从一个类型删除`null`和`undefined`（就是不需要上面的if筛除判断了），而不用任何特定的检查。
+在一个表达式之后写`!`是一个高效的类型断言指明这个值不是`null`或`undefined`。
 
 ```ts twoslash
 function liveDangerously(x?: number | null) {
@@ -673,20 +663,20 @@ function liveDangerously(x?: number | null) {
 }
 ```
 
-Just like other type assertions, this doesn't change the runtime behavior of your code, so it's important to only use `!` when you know that the value _can't_ be `null` or `undefined`.
+就像其他类型断言（就相当于你确定知道这个值，你判断错了ts也不能帮你运行时检查了），这个不会改变你代码的运行时行为，所以要注意只在你很确定值 _不会是_ `null` 或 `undefined`的时候，你才能用 `!`。
 
-## Enums
+## 枚举
 
-Enums are a feature added to JavaScript by TypeScript which allows for describing a value which could be one of a set of possible named constants. Unlike most TypeScript features, this is _not_ a type-level addition to JavaScript but something added to the language and runtime. Because of this, it's a feature which you should know exists, but maybe hold off on using unless you are sure. You can read more about enums in the [Enum reference page](/docs/handbook/enums.html).
+枚举是一个通过TypeScript添加到JavaScript的特性，允许你描述一个值，该值可能是一组可能的命名常量之一。不像大多数TypeScript特性，这个 _不是_ 一个给JavaScript编译时类型层级的特性，而是会添加到语言和运行时的。因此，正因为如此，这是一个你应该知道存在的功能，但除非你确定，否则你要延迟使用。你可以读到更多关于枚举的知识在[枚举参考页](/docs/handbook/enums.html)。
 
-## Less Common Primitives
+## 不太常见的原生类型
 
-It's worth mentioning the rest of the primitives in JavaScript which are represented in the type system.
-Though we will not go into depth here.
+值得提一下我们类型系统还有的的JavaScript里剩余的一些原生类型。
+我们不会在这里深入讨论。
 
 #### `bigint`
 
-From ES2020 onwards, there is a primitive in JavaScript used for very large integers, `BigInt`:
+自从ES2020开始，JavaScript中有一个原生类型用于非常大的整数，`BigInt`：
 
 ```ts twoslash
 // @target: es2020
@@ -698,11 +688,11 @@ const oneHundred: bigint = BigInt(100);
 const anotherHundred: bigint = 100n;
 ```
 
-You can learn more about BigInt in [the TypeScript 3.2 release notes](/docs/handbook/release-notes/typescript-3-2.html#bigint).
+你可以在[TypeScript 3.2版本日志](/docs/handbook/release-notes/typescript-3-2.html#bigint)里学习更多大整数类型。
 
 #### `symbol`
 
-There is a primitive in JavaScript used to create a globally unique reference via the function `Symbol()`:
+JavaScript里还有一个原生类型用来通过函数`Symbol()`创建全局唯一的引用：
 
 ```ts twoslash
 // @errors: 2367
@@ -714,4 +704,4 @@ if (firstName === secondName) {
 }
 ```
 
-You can learn more about them in [Symbols reference page](/docs/handbook/symbols.html).
+你可以在[Symbols参考页](/docs/handbook/symbols.html)学习他们更多知识。
