@@ -4,12 +4,12 @@
     "type": "split",
     "children": [
       {
-        "id": "81fc34ba5b51992f",
+        "id": "1661d0bd7268d177",
         "type": "leaf",
         "state": {
           "type": "markdown",
           "state": {
-            "file": "zh/handbook-v2/Everyday Types.md",
+            "file": "ko/declaration-files/By Example.md",
             "mode": "source",
             "source": false
           }
@@ -61,7 +61,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 256
+    "width": 232
   },
   "right": {
     "id": "0f26b0e1a2d955c7",
@@ -77,7 +77,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "zh/handbook-v2/Everyday Types.md",
+                "file": "ko/declaration-files/By Example.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -94,7 +94,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "zh/handbook-v2/Everyday Types.md",
+                "file": "ko/declaration-files/By Example.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -117,7 +117,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "zh/handbook-v2/Everyday Types.md"
+                "file": "ko/declaration-files/By Example.md"
               }
             }
           },
@@ -130,21 +130,23 @@
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
-    "width": 107,
-    "collapsed": true
+    "width": 405
   },
-  "active": "668ab9b13033fa9f",
+  "active": "1661d0bd7268d177",
   "lastOpenFiles": [
-    "zh/handbook-v2/The Handbook.md",
+    "zh/handbook-v2/Narrowing.md",
+    "zh/handbook-v2/More on Functions.md",
     "zh/handbook-v2/Everyday Types.md",
+    "zh/handbook-v2/The Handbook.md",
+    "en/handbook-v2/Everyday Types.md",
+    "2022-08-04.md",
+    "tsconfig.md",
     "zh/handbook-v2/Basics.md",
     "zh/get-started/TS for JS Programmers.md",
-    "tsconfig.md",
-    "2022-08-04.md",
-    "en/Nightly Builds.md"
+    "ko/declaration-files/By Example.md"
   ]
 }
