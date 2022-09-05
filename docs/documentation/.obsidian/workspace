@@ -4,12 +4,12 @@
     "type": "split",
     "children": [
       {
-        "id": "1661d0bd7268d177",
+        "id": "0ff98f3da3c6a4ec",
         "type": "leaf",
         "state": {
           "type": "markdown",
           "state": {
-            "file": "ko/declaration-files/By Example.md",
+            "file": "zh/handbook-v2/Type Manipulation/_Creating Types from Types.md",
             "mode": "source",
             "source": false
           }
@@ -40,10 +40,10 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "readonly modifier",
                 "matchingCase": false,
-                "explainSearch": false,
-                "collapseAll": false,
+                "explainSearch": true,
+                "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical"
               }
@@ -77,7 +77,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "ko/declaration-files/By Example.md",
+                "file": "zh/handbook-v2/Type Manipulation/_Creating Types from Types.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -94,7 +94,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "ko/declaration-files/By Example.md",
+                "file": "zh/handbook-v2/Type Manipulation/_Creating Types from Types.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -117,7 +117,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "ko/declaration-files/By Example.md"
+                "file": "zh/handbook-v2/Type Manipulation/_Creating Types from Types.md"
               }
             }
           },
@@ -134,19 +134,19 @@
       }
     ],
     "direction": "horizontal",
-    "width": 405
+    "width": 286
   },
-  "active": "1661d0bd7268d177",
+  "active": "668ab9b13033fa9f",
   "lastOpenFiles": [
-    "zh/handbook-v2/Narrowing.md",
-    "zh/handbook-v2/More on Functions.md",
-    "zh/handbook-v2/Everyday Types.md",
-    "zh/handbook-v2/The Handbook.md",
-    "en/handbook-v2/Everyday Types.md",
-    "2022-08-04.md",
+    "zh/handbook-v2/Type Manipulation/Conditional Types.md",
+    "zh/handbook-v2/Modules.md",
+    "zh/handbook-v2/Classes.md",
     "tsconfig.md",
     "zh/handbook-v2/Basics.md",
-    "zh/get-started/TS for JS Programmers.md",
-    "ko/declaration-files/By Example.md"
+    "zh/handbook-v2/Narrowing.md",
+    "zh/handbook-v2/Object Types.md",
+    "zh/handbook-v2/The Handbook.md",
+    "zh/handbook-v2/Everyday Types.md",
+    "zh/handbook-v2/Type Manipulation/Indexed Access Types.md"
   ]
 }

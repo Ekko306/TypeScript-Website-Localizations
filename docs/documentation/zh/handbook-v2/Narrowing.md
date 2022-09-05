@@ -61,7 +61,7 @@ function padLeft(padding: number | string, input: string) {
 
 有几种不同的结构TypeScript可以理解来缩小范围。
 
-## 1. `typeof` 类型守卫
+## `typeof` 类型守卫
 
 正如我们看见的，JavaScript支持`typeof`操作符，它可以提供我们在运行时的值类型的一些非常基本的信息。
 TypeScript期待这个操作符返回一些特定字符串的集合：
@@ -103,7 +103,7 @@ function printAll(strs: string | string[] | null) {
 
 这个就是对我们所谓的“真实性”检查的一个很好的解释。（检查出strs可能为null的真实性）
 
-# 2. 真实性缩小
+# 真实性缩小
 
 真实性可能不是一个你能在字典里找到的值，但在JavaScript你会听到关于它的很多东西。
 
@@ -203,7 +203,7 @@ function multiplyAll(
 }
 ```
 
-## 2.1 相等性缩小
+## 相等性缩小
 
 TypeScript也可以使用`switch`声明和像`===`,`!==`,`==`和`!=`这些相等性检查来缩小类型。
 例如：
@@ -269,7 +269,7 @@ function multiplyValue(container: Container, factor: number) {
 }
 ```
 
-## 2.2 `in`操作符缩小
+## `in`操作符缩小
 
 JavaScript有一个操作符来判断一个对象是否有一个名字的属性值：`in`操作符。
 TypeScript将这种方式算作来缩小潜在类型的一种方式。
@@ -309,7 +309,7 @@ function move(animal: Fish | Bird | Human) {
 }
 ```
 
-## 2.3 `instanceof` 缩小
+## `instanceof` 缩小
 
 JavaScript有一个操作符来检查一个值是否是另一个值的"instance"继承关系。
 更具体来说，在JavaScript里`x instanceof Foo`会检查 _原型链_ 判断`Foo.prototype`是否有`x`。
@@ -329,7 +329,7 @@ function logValue(x: Date | string) {
 }
 ```
 
-## 2.4 赋值
+## 赋值
 
 正如我们前面提到的，当我们给任意变量赋值的时候，TypeScript会检查右边的值，并且给左边变量恰当的缩小。
 
@@ -366,7 +366,7 @@ console.log(x);
 //          ^?
 ```
 
-## 2.5 控制流分析
+## 控制流分析
 
 到此为止，我们已经看了TypeScript通过特定分支来缩小类型的基本例子。
 但是还有一些情况不是简单的从`in`和`while`或者条件判断的类型守卫中对每个类型进行判断。（说的高深，就是return等，有控制流）
@@ -412,7 +412,7 @@ function example() {
 }
 ```
 
-## 2.6 使用类型预测
+## 使用类型预测
 
 我们已经从现有的JavaScript结构中处理了缩小的问题，然而有时候你想要对类型在里的代码中如何改变的有更直观的控制。
 
@@ -477,7 +477,7 @@ const underWater3: Fish[] = zoo.filter((pet): pet is Fish => {
 
 此外，类可以 [使用 `this is Type`](/docs/handbook/2/classes.html#this-based-type-guards) 来缩小它们的类型。
 
-# 3. 可区分联合类型
+# 可区分联合类型
 
 我们为止看到的所有类型关注于缩小那些像`string`，`boolean`和`number`简单类型的单个变量。
 虽然和这个很常见，但大多数时候在JavaScript里我们会处理稍微复杂的结构。
@@ -696,12 +696,12 @@ function getArea(shape: Shape) {
 可区分的联合类型不仅仅是区分圆形和正方形，其他还是很有用的。
 它们非常适合在 JavaScript 中表示任何类型的**消息传递方案**，就像你通过网络发送消息（客户端和服务端通信） ，或者在状态管理框架里编码差异更新等场景。
 
-# 4. `nerver`类型
+# `nerver`类型
 
 当缩小内省的时候，你可以减少你联合类型的选项，直到你删除了所有可能的类型并且什么都没有剩下。
 在那种情况，TypeScript将会用一个`nerver`类型来代表一个不应该存在的状态。
 
-# 5. 穷举的检查
+# 穷举的检查
 
 `never`类型可以赋予给任何类型；然后，其他类型不能赋予给`never`类型的值（除了`never`本身）。这意味着你可以使用缩小类型并且依赖`never`在"switch"语句里出现来做穷举检查。
 
